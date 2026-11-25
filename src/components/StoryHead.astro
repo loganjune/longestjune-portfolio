@@ -1,0 +1,30 @@
+---
+// The top of a story (a note or a travel album): small label line, big centred title,
+// one-line summary and an optional wide lead picture.
+import Pic from './Pic.astro';
+import { url, formatDate } from '../lib/url';
+
+interface Props {
+  kind: string;
+  title: string;
+  date?: Date | null;
+  location?: string;
+  description?: string;
+  picture?: string;
+  back: { href: string; label: string };
+  draft?: boolean;
+}
+const { kind, title, date, location, description, picture, back, draft } = Astro.props;
+const meta = [kind, location, date ? formatDate(date) : '', draft ? 'Draft' : ''].filter(Boolean);
+---
+<div class="g story-head">
+  <a class="lab soft story-back" href={url(back.href)}>← {back.label}</a>
+  <p class="lab soft story-meta">{meta.map((m) => <span>{m}</span>)}</p>
+  <h1>{title}</h1>
+  {description && <p class="story-desc">{description}</p>}
+</div>
+{picture && (
+  <div class="story-hero fill">
+    <Pic picture={picture} alt="" />
+  </div>
+)}

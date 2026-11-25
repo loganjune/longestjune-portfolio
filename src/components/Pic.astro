@@ -1,0 +1,12 @@
+---
+// Shows a built-in drawing (sea, room, pool, wall, dune, dusk) or your own image.
+// For your own image, put the file in public/images/ and use "images/your-file.jpg".
+import { scene } from '../lib/scene';
+import { url, isImage } from '../lib/url';
+
+interface Props { picture?: string; alt?: string }
+const { picture = 'sea', alt = '' } = Astro.props;
+const img = isImage(picture);
+const src = img ? url(picture) : '';
+---
+{img ? <img src={src} alt={alt} loading="lazy" decoding="async" /> : <Fragment set:html={scene(picture)} />}

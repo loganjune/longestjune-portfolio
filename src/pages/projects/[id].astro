@@ -1,0 +1,56 @@
+---
+// One project, as a case study: the details beside a short description, a wide picture,
+// the write-up, then any extra images in a photo-book layout.
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import Pic from '../../components/Pic.astro';
+import PhotoGallery from '../../components/react/PhotoGallery';
+import { render } from 'astro:content';
+import { getProjects, projectPicture } from '../../lib/projects';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({ params: { id: project.id }, props: { project, next: projects[(i + 1) % projects.length] } }));
+}
+
+const { project, next } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const hasWriteUp = Boolean(project.body?.trim());
+const facts = [
+  ['Status', d.status],
+  ['Year', d.year],
+  ['Role', d.role],
+  ['Tools', d.tools],
+].filter(([, v]) => v) as [string, string][];
+---
+<Layout title={d.title} description={d.description} current="projects">
+  <PageHead title={d.title} jp="制作">
+    <a class="lab soft" href={url('projects')} style="text-decoration:none">← All projects</a>
+  </PageHead>
+  <div class="g sec split case-intro">
+    <ul class="rows case-facts">
+      {facts.map(([k, v]) => <li class="split"><span class="lab soft">{k}</span><span>{v}</span></li>)}
+      {d.link && <li class="split"><span class="lab soft">Link</span><a href={d.link}>{d.link.replace(/^https?:\/\//, '').replace(/\/$/, '')} ↗</a></li>}
+    </ul>
+    {d.description && <p class="statement">{d.description}</p>}
+  </div>
+  <div class="plate fill case-hero"><Pic picture={projectPicture(project)} alt="" /></div>
+  {hasWriteUp && (
+    <div class="g story-body">
+      <article class="note-body"><Content /></article>
+    </div>
+  )}
+  {d.images.length > 0 && (
+    <section class="g sec album-photos">
+      <p class="lab story-section">Images</p>
+      <PhotoGallery client:visible layout="book" label={d.title} photos={d.images.map((p) => ({ picture: p.photo, caption: p.caption }))} />
+    </section>
+  )}
+  {next && next.id !== project.id && (
+    <div class="g sec">
+      <a class="case-next" href={url(`projects/${next.id}`)}><span class="lab soft">Next project</span><span class="case-next-title">{next.data.title} →</span></a>
+    </div>
+  )}
+</Layout>

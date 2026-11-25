@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# Cloudflare worker local files
+worker/.wrangler/
+worker/.dev.vars
+.claude/

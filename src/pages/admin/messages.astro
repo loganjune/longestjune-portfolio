@@ -1,0 +1,17 @@
+---
+// Messages now live inside the editor. This keeps old links (and alert emails) working.
+import { url } from '../../lib/url';
+const to = url('admin/#/messages');
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="refresh" content={`0; url=${to}`} />
+  <title>Messages · longest june</title>
+</head>
+<body>
+  <p><a href={to}>Messages have moved into the editor.</a></p>
+</body>
+</html>

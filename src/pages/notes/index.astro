@@ -1,0 +1,15 @@
+---
+// Notes now live on the Stories page. This keeps old links working.
+import { url } from '../../lib/url';
+const to = url('stories');
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="refresh" content={`0; url=${to}`} />
+  <link rel="canonical" href={to} />
+  <title>Stories · longest june</title>
+</head>
+<body><p><a href={to}>Notes are now on the Stories page.</a></p></body>
+</html>

@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import { site, resume } from '../lib/content';
+import { url } from '../lib/url';
+---
+<Layout title="Resume" current="resume">
+  <PageHead title="Resume" jp="経歴">
+    <span class="lab links"><a href={site.github}>GitHub →</a><a href={url('contact')}>Full CV on request →</a></span>
+  </PageHead>
+  <div class="g sec res">
+    {resume.map((r) => (
+      <div class="facts">
+        <span class="lab">{r.section}</span>
+        <ul class="rows">
+          {r.items.map((it) => (
+            <li class="split"><span class="lab soft">{it.years || ' '}</span><div><h3>{it.title}</h3><span class="soft" style="font-size:16px">{it.details}</span></div></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</Layout>

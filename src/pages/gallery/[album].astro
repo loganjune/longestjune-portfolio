@@ -1,0 +1,45 @@
+---
+// One album, laid out like a travel story: heading and lead photo, the story (if there is one),
+// then all the photos in a photo-book layout. Tap a photo to see it large.
+import Layout from '../../layouts/Layout.astro';
+import StoryHead from '../../components/StoryHead.astro';
+import PhotoGallery from '../../components/react/PhotoGallery';
+import { render } from 'astro:content';
+import { getAlbums, albumCover } from '../../lib/albums';
+
+export async function getStaticPaths() {
+  const albums = await getAlbums();
+  return albums.map((album) => ({ params: { album: album.id }, props: { album } }));
+}
+
+const { album } = Astro.props;
+const { title, location, date, description, photos, draft } = album.data;
+const { Content } = await render(album);
+const hasStory = Boolean(album.body?.trim());
+// The cover already shows large at the top, so the photo book below leaves it out.
+const cover = albumCover(album.data);
+const rest = photos.filter((p) => p.photo !== cover);
+---
+<Layout title={title} description={description || location} current="gallery">
+  <StoryHead
+    kind={hasStory ? 'Travel' : 'Album'}
+    title={title}
+    location={location}
+    date={date}
+    description={description}
+    picture={cover}
+    back={{ href: 'gallery', label: 'Gallery' }}
+    draft={draft}
+  />
+  {hasStory && (
+    <div class="g story-body">
+      <article class="note-body"><Content /></article>
+    </div>
+  )}
+  {rest.length > 0 && (
+    <section class="g sec album-photos">
+      <p class="lab story-section">{photos.length} {photos.length === 1 ? 'photo' : 'photos'}</p>
+      <PhotoGallery client:visible layout="book" label={title} photos={rest.map((p) => ({ picture: p.photo, caption: p.caption }))} />
+    </section>
+  )}
+</Layout>

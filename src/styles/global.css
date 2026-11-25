@@ -1,0 +1,307 @@
+/* VOICE quiet, minimal, Japanese studio restraint (after owiu-design.com)
+   IDEA a design studio's monograph: full-bleed plates, giant capitals, index rows ruled in hairlines
+   PICTURE a filtered 3s clip of the beach (plays once) at sunset in the hero; generated summer "photographs": hazy sea at the solstice, window light, pool tile, plaster shadow
+   COLOUR pale pink-sand ground #f3e6dc, warm brown ink, soft tan rules; plates at 80% opacity over the sand for haze; summer light blue + light pink live in the plates
+   TYPE Marcellus capitals for display, STIX Two Text for text, Jost small caps for labels
+   LAYOUT plate fills the first screen with the name across its foot; below, label column left, content right */
+:root{color-scheme:light;
+--bg:#f3e6dc;
+--ink:#3a2c27;
+--soft:#7d6a62;
+--rule:#3a2c2729;
+--blue:#e2e8e8;
+--pink:#f3dcd9}
+::selection{background:#f2c9cf}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "STIX Two Text",Georgia,serif;overflow-x:clip}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.lab{font:500 13px/1.4 Jost,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.disp{font-family:Marcellus,"STIX Two Text",serif;font-weight:400;text-transform:uppercase;line-height:.92;letter-spacing:-.01em;margin:0}
+.g{padding-left:max(2.2vw,16px);padding-right:max(2.2vw,16px)}
+.soft{color:var(--soft)}
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:4;display:flex;justify-content:space-between;align-items:center;padding-top:6px;padding-bottom:6px;color:var(--ink);transition:background-color .35s ease,color .35s ease,border-color .35s ease;border-bottom:1px solid transparent}
+header.on-plate{color:#fff}
+header.solid{color:var(--ink);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom-color:var(--rule)}
+@media(prefers-reduced-motion:reduce){header{transition:none}}
+header .menu-btn{min-height:44px;padding:0}
+header .right{text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+/* overlay menu */
+#menu{position:fixed;inset:0;z-index:10;background:var(--bg);display:grid;grid-template-rows:auto 1fr auto;padding-top:8px;padding-bottom:24px}
+#menu[hidden]{display:none}
+#menu li a[aria-current=page] .disp{opacity:.55}
+#menu .top{display:grid;grid-template-columns:1fr auto 1fr}
+#menu ol{list-style:none;margin:0;padding:0;align-self:center;border-top:1px solid var(--rule)}
+#menu li a{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:baseline;gap:20px;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--rule)}
+#menu li a .disp{font-size:clamp(34px,6.4vw,76px)}
+#menu li a .jp{font:500 15px "Shippori Mincho",serif;color:var(--soft)}
+#menu li a:hover .disp{opacity:.55}
+/* plates */
+.plate{position:relative;overflow:hidden;background:var(--bg)}
+/* pictures: built-in drawings (svg) or your own photos (img), shown at 80% over the sand */
+.fill>svg,.fill>img,.fill>.pic-svg>svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:.8}
+.pic-svg{display:contents}
+.hero>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;opacity:.92;display:block}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(58,44,39,.18),transparent 20%,transparent 62%,rgba(58,44,39,.3));pointer-events:none}
+.hero>h1,.hero>.cap,.hero>.tate{z-index:1;text-shadow:0 1px 14px rgba(58,44,39,.28)}
+.hero{height:min(100svh,980px);min-height:520px}
+.hero h1{position:absolute;left:0;right:0;bottom:max(14px,.16em);color:#fff;font-size:clamp(40px,11.5vw,220px);line-height:1;white-space:nowrap;text-align:center}
+/* 龍 (long, dragon): a small character after the name, like an artist's mark on a print. Plain white, no box. */
+.hero h1 .seal{margin-left:.35em;vertical-align:2.9em;font:500 .16em/1 "Shippori Mincho",serif;opacity:.55}
+.hero .tate{position:absolute;right:max(2.2vw,16px);top:42%;writing-mode:vertical-rl;color:#fff;font:500 17px/1 "Shippori Mincho",serif;letter-spacing:.5em}
+.hero .cap{position:absolute;left:max(2.2vw,16px);top:42%;color:#fff;max-width:16em;display:grid;gap:16px;justify-items:start}
+.vidbtn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.8);display:inline-flex;align-items:center;justify-content:center;color:#fff;transition:background-color .2s}
+.vidbtn:hover{background:rgba(255,255,255,.18)}
+.vidbtn svg{margin-left:1px}
+/* split rows */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.sec{padding-top:clamp(56px,9vw,140px);padding-bottom:clamp(40px,6vw,90px)}
+.statement{font-size:clamp(21px,2.2vw,30px);line-height:1.35;margin:0;max-width:22em}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{border-bottom:1px solid var(--rule)}
+.rows li:first-child{border-top:1px solid var(--rule)}
+.rows a,.rows .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:14px 0;text-decoration:none;min-height:48px}
+.rows a:hover .lab{opacity:.55}
+.rows .r{grid-template-columns:8em minmax(0,1fr) auto}
+/* About page lists: the section label on top, each row's label in the left column */
+.facts>.lab{display:block;margin-bottom:18px}
+.sec+.facts{padding-top:0}
+.facts .rows li.split,.facts .rows a.split{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:14px 0;align-items:baseline;gap:4px 24px;min-height:0}
+.facts .fact-main{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.res .facts+.facts{margin-top:clamp(40px,5vw,64px)}
+.arrow{font-family:Jost,sans-serif;font-size:15px}
+.links{display:flex;flex-wrap:wrap;gap:8px 24px}
+/* featured slider */
+.feat{height:min(92svh,860px);min-height:480px}
+.feat h2{position:absolute;left:0;right:0;top:-.08em;color:#fff;font-size:clamp(40px,11vw,210px);text-align:center;white-space:nowrap;overflow:hidden}
+/* The project names and status: a soft warm fade along the bottom and a text shadow keep them readable on any photo. */
+.feat::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(to top,rgba(58,44,39,.42),rgba(58,44,39,0));pointer-events:none}
+.feat nav{position:absolute;z-index:1;left:max(2.2vw,16px);bottom:24px;display:grid;gap:2px;color:#fff;text-shadow:0 1px 10px rgba(58,44,39,.45)}
+.feat nav button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;text-align:left;padding:8px 0;opacity:.82;border-bottom:1px solid transparent;min-height:36px}
+.feat nav button:hover{opacity:1}
+.feat nav button[aria-current=true]{opacity:1;border-bottom-color:#fff}
+.feat .meta{position:absolute;z-index:1;right:max(2.2vw,16px);bottom:30px;color:#fff;text-align:right;text-shadow:0 1px 10px rgba(58,44,39,.45)}
+.feat .fslide{position:absolute;inset:0;transition:opacity .9s ease}
+.feat .fslide[data-off]{opacity:0}
+/* A colour band behind the title (as tall as the title; set by the slider script), with a thin coping line. */
+.feat-band{position:absolute;left:0;right:0;top:0;height:calc(var(--title-h,1em) + .6vw);background:var(--band);opacity:.94;border-bottom:clamp(4px,.5vw,8px) solid #e6c9cd}
+@media(prefers-reduced-motion:reduce){.feat .fslide{transition:none}}
+/* page heads */
+.phead{padding-top:120px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+.phead .disp{font-size:clamp(56px,12vw,200px)}
+.phead .split{margin-top:22px;align-items:end}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 24px}
+.cards.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--bg)}
+.card.tall .ph{aspect-ratio:4/5}
+/* Gallery: uploaded photos show whole, at their own shape (so a white print border isn't cropped); drawings keep their tile. */
+.card.photo .ph:has(>img){aspect-ratio:auto}
+.card.photo .ph>img{position:static;height:auto}
+/* Gallery grid (padding, since the figures carry an inline margin): gentle offsets, like prints pinned a little unevenly (quieter than an album's photo book).
+   The middle column sits lower; some pictures are a touch narrower and lean to one side. */
+.scatter .photo:nth-child(3n+2){padding-top:clamp(32px,4.5vw,72px)}
+.scatter .photo:nth-child(4n+1){width:91%;justify-self:end}
+.scatter .photo:nth-child(4n+3){width:88%;justify-self:start}
+/* A last row of two leaves the gap in the middle: the last picture moves to the right column (and drops the middle column's offset). */
+.scatter .photo:nth-child(3n+2):last-child{grid-column:3;padding-top:0}
+@media(max-width:820px){
+  .scatter .photo:nth-child(3n+2){padding-top:0}
+  .scatter .photo:nth-child(3n+2):last-child{grid-column:auto}
+  .scatter .photo:nth-child(2n){padding-top:clamp(32px,6vw,56px)}
+}
+@media(max-width:640px){
+  .scatter .photo:nth-child(2n){padding-top:0}
+  .scatter .photo:nth-child(4n+1),.scatter .photo:nth-child(4n+3){width:90%}
+}
+.card .cap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:baseline;padding-top:12px}
+.card h3{font:400 21px/1.25 "STIX Two Text",serif;margin:2px 0 0}
+a.card{display:block;text-decoration:none}
+a.card:hover h3{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule)}
+.card p{margin:4px 0 0;font-size:17px;color:var(--soft);max-width:34em}
+.price{font:500 15px Jost,sans-serif;white-space:nowrap}
+.filters{display:flex;flex-wrap:wrap;gap:6px 22px}
+/* Collapsible section labels (Gallery): the label is a button; the chevron turns to point right when folded. */
+.sec-toggle{display:inline-flex;align-items:center;gap:10px;min-height:36px;padding:0;color:inherit;cursor:pointer}
+.sec:has(.sec-toggle[aria-expanded=false]){padding-bottom:0}
+.sec-toggle svg{transition:transform .25s ease}
+.sec-toggle[aria-expanded=false] svg{transform:rotate(-90deg)}
+.sec-toggle:hover{opacity:.6}
+.filters button{min-height:44px;opacity:.5;border-bottom:1px solid transparent}
+.filters button[aria-pressed=true]{opacity:1;border-bottom-color:currentColor}
+/* about / resume */
+.prose p{margin:0 0 18px;max-width:34em}
+.res .r{grid-template-columns:9em minmax(0,1fr)}
+.res h3{font:400 19px/1.35 "STIX Two Text",serif;margin:0}
+/* contact */
+form{display:grid;gap:22px}
+label{display:grid;gap:6px}
+input,textarea{font:17px "STIX Two Text",serif;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--rule);padding:10px 0;width:100%;border-radius:0}
+input:focus,textarea:focus{outline:none;border-bottom-color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+.btn{justify-self:start;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border-radius:999px;background:var(--ink);color:var(--bg)}
+.btn:hover{background:#2a1f1b}
+.msg{font-size:17px;background:var(--blue);padding:12px 14px}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+/* footer */
+footer{border-top:1px solid var(--rule);padding-top:56px;padding-bottom:28px;margin-top:clamp(56px,8vw,120px)}
+footer .big{font-size:clamp(36px,10vw,180px);white-space:nowrap;margin-top:56px;overflow:hidden}
+footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+footer a{text-decoration:none}
+footer a:hover{text-decoration:underline}
+.sample{font-size:15px;color:var(--soft);margin-top:18px}
+.fit span{display:inline-block}
+@media(max-width:820px){.cards.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.facts .rows li.split,.facts .rows a.split,.split,.cards,.cards.three,footer .cols{grid-template-columns:minmax(0,1fr)}.hero .cap{top:auto;bottom:22%}.hero .tate{top:30%}.rows .r,.res .r{grid-template-columns:minmax(0,1fr) auto}.rows .r .soft:first-child,.res .r>.lab{grid-column:1/-1}.feat .meta{display:none}.phead{padding-top:96px}body{font-size:18px}}
+
+/* note pages */
+.note-head{padding-top:120px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
+.note-head h1{font:400 clamp(32px,4.4vw,56px)/1.1 "STIX Two Text",serif;letter-spacing:-.01em;margin:14px 0 0;max-width:18em;text-wrap:balance}
+.note-head .desc{font-size:clamp(20px,2vw,24px);color:var(--soft);margin:14px 0 0;max-width:34em}
+.note-body{font-size:clamp(17px,1.4vw,19px);line-height:1.7;max-width:36em}
+.note-body>*:first-child{margin-top:0}
+.note-body p,.note-body ul,.note-body ol{margin:0 0 1.1em}
+.note-body h2{font:400 clamp(23px,2.3vw,28px)/1.25 "STIX Two Text",serif;margin:1.8em 0 .5em}
+.note-body h3{font:500 15px/1.4 Jost,sans-serif;letter-spacing:.1em;text-transform:uppercase;margin:2em 0 .6em}
+.note-body a{text-underline-offset:3px}
+.note-body img{max-width:100%;height:auto;display:block;margin:1.6em 0}
+.note-body blockquote{margin:1.4em 0;padding-left:1em;border-left:2px solid var(--rule);color:var(--soft)}
+.note-body code{font-size:.85em;background:var(--pink);padding:.1em .35em;border-radius:3px;overflow-wrap:anywhere}
+.note-body pre{overflow-x:auto;background:var(--pink);padding:14px 16px;border-radius:6px;font-size:15px}
+.note-body pre code{background:none;padding:0}
+.note-body hr{border:0;border-top:1px solid var(--rule);margin:2em 0}
+.pager{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;border-top:1px solid var(--rule);padding-top:18px;margin-top:56px}
+.pager a{text-decoration:none;display:grid;gap:4px}
+.pager a:last-child{text-align:right}
+.pager a:hover span:last-child{text-decoration:underline}
+@media(max-width:640px){.note-head{padding-top:96px}.pager{grid-template-columns:minmax(0,1fr)}.pager a:last-child{text-align:left}}
+
+/* ---------- React pieces (src/components/react/) ---------- */
+/* photo viewer: sand background, never black */
+.photo-open{display:block;width:100%;padding:0;cursor:zoom-in}
+.photo-open:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.viewer{border:0;padding:0;margin:0;width:100vw;max-width:none;height:100dvh;max-height:none;background:var(--bg);color:var(--ink);overflow:hidden}
+.viewer::backdrop{background:var(--bg)}
+.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr)}
+.viewer-top{display:flex;justify-content:space-between;align-items:center;padding-top:10px;padding-bottom:10px}
+.viewer-fig{margin:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;min-height:0;padding-bottom:22px}
+.viewer-pic{min-height:0;display:grid;place-items:center;animation:fadein .35s ease both}
+.viewer-pic img{max-width:100%;max-height:100%;object-fit:contain;opacity:.92;display:block}
+.viewer-pic .pic-svg{display:block;width:min(100%,calc((100dvh - 150px) * 1.5));aspect-ratio:3/2}
+.viewer-pic .pic-svg svg{width:100%;height:100%;display:block;opacity:.92}
+.viewer-cap{min-height:1.4em;text-align:center;font:500 13px/1.4 Jost,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.round{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--rule);border-radius:50%;background:color-mix(in srgb,var(--bg) 80%,transparent)}
+.round:hover{border-color:var(--ink)}
+.viewer-nav{position:absolute;top:50%;transform:translateY(-50%)}
+.viewer-nav.prev{left:max(2.2vw,16px)}
+.viewer-nav.next{right:max(2.2vw,16px)}
+/* projects filter */
+.proj-bar{align-items:center;margin-bottom:28px}
+.proj-bar .filters{justify-self:end}
+.rise{animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.rise,.viewer-pic{animation:none}}
+/* daylight line under the location */
+.daylight{display:flex;gap:10px;align-items:baseline;margin:14px 0 0;max-width:34em;font-size:15px;color:var(--soft)}
+.daylight svg{flex:none;position:relative;top:2px}
+@media(max-width:640px){.proj-bar .filters{justify-self:start}.viewer-nav{top:auto;bottom:18px;transform:none}}
+/* gallery captions: over the photo on hover (mouse), small underneath on touch screens */
+.photo{position:relative}
+/* each photo tile is only as tall as its own picture, so a hover caption sits on the picture, not below it */
+.cards .photo,.book .photo{align-self:start}
+.photo-cap{font:500 11px/1.4 Jost,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);padding-top:8px}
+@media (hover:hover) and (pointer:fine){
+  .photo-cap{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;color:var(--ink);background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease;pointer-events:none}
+  .photo:hover .photo-cap,.photo:focus-within .photo-cap{opacity:1;transform:none}
+}
+
+/* ---------- stories (notes and travel albums) ---------- */
+.story-head{padding-top:clamp(110px,12vw,150px);padding-bottom:clamp(28px,4vw,48px);text-align:center;display:grid;justify-items:center;gap:14px}
+.story-back{text-decoration:none;justify-self:start}
+.story-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin:12px 0 0}
+.story-head h1{font:400 clamp(34px,5.2vw,68px)/1.08 "STIX Two Text",serif;letter-spacing:-.015em;margin:0;max-width:16em;text-wrap:balance}
+.story-desc{font-size:clamp(18px,1.7vw,22px);color:var(--soft);margin:0;max-width:30em;text-wrap:balance}
+.story-hero{position:relative;width:min(1180px,calc(100% - 2*max(2.2vw,16px)));margin:0 auto;aspect-ratio:3/2;max-height:82svh;overflow:hidden}
+.story-body{padding-top:clamp(40px,6vw,80px)}
+.story-body .note-body,.story-body .pager{max-width:36em;margin-left:auto;margin-right:auto}
+.story-section{text-align:center;margin:0 0 clamp(28px,4vw,48px)}
+.album-photos{border-top:1px solid var(--rule);margin-top:clamp(40px,6vw,80px)}
+
+/* photo-book layout: each photo at its own proportions; one wide, a pair, one left, one right */
+.book{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(36px,6vw,96px) clamp(16px,2.4vw,32px);align-items:start}
+.bk{grid-column:span 12}
+.bk-wide{grid-column:1/-1}
+.bk-pair{grid-column:span 6}
+.bk-left{grid-column:2/8}
+.bk-right{grid-column:6/12}
+.bk-pic{display:block;width:100%;padding:0;cursor:zoom-in}
+.bk-pic img{display:block;width:100%;height:auto;opacity:.85}
+.bk-pic .pic-svg{display:block;aspect-ratio:3/2}
+.bk-pic .pic-svg svg{display:block;width:100%;height:100%;opacity:.85}
+.bk-pic:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* Stories page: the newest story large, then cards */
+.story-lead{position:relative;display:block;aspect-ratio:16/9;max-height:78svh;overflow:hidden;text-decoration:none;color:#fff;margin-bottom:clamp(48px,6vw,88px)}
+.story-lead-text{position:absolute;left:0;right:0;bottom:0;display:grid;gap:10px;justify-items:start;padding:clamp(20px,3vw,44px);background:linear-gradient(to top,rgba(58,44,39,.42),rgba(58,44,39,0))}
+.story-lead-title{font:400 clamp(28px,4vw,54px)/1.1 "STIX Two Text",serif;max-width:18em;text-wrap:balance}
+.story-lead-desc{font-size:clamp(16px,1.4vw,19px);max-width:34em}
+.story-lead:hover .story-lead-title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.story-cards{gap:56px 24px}
+.story-card{display:grid;gap:8px;justify-items:center;text-align:center;text-decoration:none}
+.story-card .ph{justify-self:stretch;margin-bottom:8px}
+.story-card h3{max-width:20em;text-wrap:balance}
+.story-card p{margin:0}
+.story-card:hover h3{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule)}
+
+/* Gallery: the featured album: a wide photo, a small label, and its name (fades on hover) */
+.featured-album{display:block;text-decoration:none}
+.featured-album .ph{position:relative;aspect-ratio:16/9;max-height:78svh;overflow:hidden;margin-inline:auto} /* centred when the height limit makes it narrower than the page */
+.featured-tag{position:absolute;left:clamp(16px,2.4vw,32px);top:clamp(16px,2.4vw,28px);color:#fff;text-shadow:0 1px 12px rgba(58,44,39,.3)}
+.featured-album .album-name{font-size:clamp(44px,8vw,128px)}
+.featured-album .album-title{font:400 22px/1.3 "STIX Two Text",serif;margin:12px 0 0}
+@media(max-width:640px){.featured-album .ph{aspect-ratio:4/5}}
+
+/* Gallery: album name over the cover, fading away on hover to show the photo (mouse); under the cover on phones */
+.album .ph{position:relative}
+.album-name{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;color:#fff;font-size:clamp(34px,5vw,72px);line-height:.95;opacity:0;transition:opacity .3s ease;pointer-events:none;text-shadow:0 1px 18px rgba(58,44,39,.25)}
+@media (hover:hover) and (pointer:fine){
+  .album .album-name{opacity:1}
+  .album:hover .album-name,.album:focus-visible .album-name{opacity:0}
+  .album .album-title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+}
+
+/* ---------- projects as case studies ---------- */
+.pill{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border:1px solid var(--ink);border-radius:999px;font:500 12px/1 Jost,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.pill:hover{background:var(--ink);color:var(--bg)}
+.case-rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.case-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.3fr);gap:24px;padding:28px 0;border-bottom:1px solid var(--rule);align-items:start}
+.case-title{display:grid;gap:16px;justify-items:start}
+.case-title h3{font:400 clamp(26px,2.6vw,36px)/1.1 "STIX Two Text",serif;margin:0}
+.case-title h3 a{text-decoration:none}
+.case-title h3 a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--rule)}
+.case-meta{display:grid;gap:6px;padding-top:8px}
+.case-desc{margin:0;padding-top:4px;max-width:24em}
+.case-pic{position:relative;display:block;aspect-ratio:4/3;overflow:hidden}
+.case-intro{align-items:start}
+.case-facts{margin:0}
+.case-facts li.split{padding:12px 0;align-items:baseline}
+.case-hero{height:min(78svh,720px);margin-top:clamp(20px,3vw,40px)}
+.case-next{display:grid;gap:8px;justify-items:end;text-align:right;text-decoration:none;border-top:1px solid var(--rule);padding-top:24px}
+.case-next-title{font:400 clamp(26px,3vw,40px)/1.1 "STIX Two Text",serif}
+.case-next:hover .case-next-title{text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--rule)}
+
+@media(max-width:820px){
+  .case-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .case-pic{grid-column:1/-1;grid-row:1}
+}
+@media(max-width:640px){
+  .bk-wide,.bk-pair,.bk-left,.bk-right{grid-column:1/-1}
+  .book{gap:28px}
+  .story-lead{aspect-ratio:4/5}
+  .case-row{grid-template-columns:minmax(0,1fr);gap:12px}
+  .case-facts li.split{grid-template-columns:7em minmax(0,1fr)}
+}

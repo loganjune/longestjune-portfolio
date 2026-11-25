@@ -1,0 +1,83 @@
+{
+  "gallery": [
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-window-seat-print.webp",
+      "caption": "Window seat"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-after-the-rain.webp",
+      "caption": "After the rain"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-the-long-walk.webp",
+      "caption": "The long walk to the water"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-shoreline-print.webp",
+      "caption": "Shoreline"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-night-walk.webp",
+      "caption": "Night walk"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-garden-pond.webp",
+      "caption": "Garden pond"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-garden-path.webp",
+      "caption": "Garden path at dusk"
+    },
+    {
+      "picture": "sea",
+      "photo": "/images/gallery/2026-11-pool-day-649q.webp",
+      "caption": "Pool day"
+    }
+  ],
+  "drawings": [
+    {
+      "picture": "sea",
+      "photo": "",
+      "caption": "Morning haze"
+    },
+    {
+      "picture": "room",
+      "photo": "",
+      "caption": "West window"
+    },
+    {
+      "picture": "pool",
+      "photo": "",
+      "caption": "Lane four"
+    },
+    {
+      "picture": "wall",
+      "photo": "",
+      "caption": "Afternoon, plaster"
+    },
+    {
+      "picture": "dusk",
+      "photo": "",
+      "caption": "Twenty past eight"
+    },
+    {
+      "picture": "dune",
+      "photo": "",
+      "caption": "Soft dunes"
+    }
+  ],
+  "albums": [
+    "marina-del-rey-summer-2026",
+    "bergen-norway",
+    "cdmx",
+    "tainan-summer-2026"
+  ],
+  "featured": "marina-del-rey-summer-2026"
+}

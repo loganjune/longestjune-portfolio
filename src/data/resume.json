@@ -1,0 +1,59 @@
+{
+  "resume": [
+    {
+      "section": "Now",
+      "items": [
+        {
+          "title": "Building longest june",
+          "details": "Designing and making small tools, sites, and useful things.",
+          "years": "2026"
+        }
+      ]
+    },
+    {
+      "section": "Experience",
+      "items": [
+        {
+          "title": "Project Manager, Series B defense start-up",
+          "details": "",
+          "years": "2026 - present"
+        },
+        {
+          "title": "Team Lead, technical, Fortune 200 chemical company",
+          "details": "Chemistry, operations, manufacturing, people management, and everything in between",
+          "years": "2019 - 2025"
+        }
+      ]
+    },
+    {
+      "section": "Education",
+      "items": [
+        {
+          "title": "Ph.D. Materials Science & Engineering",
+          "details": "University of Texas at Austin",
+          "years": "2019"
+        }
+      ]
+    },
+    {
+      "section": "Skills",
+      "items": [
+        {
+          "title": "Design",
+          "details": "Interface, identity, layout, typography",
+          "years": ""
+        },
+        {
+          "title": "Building",
+          "details": "TypeScript, React, Astro, HTML/CSS, Git, Javascript",
+          "years": ""
+        },
+        {
+          "title": "Making",
+          "details": "Web, print, photography, ceramics",
+          "years": ""
+        }
+      ]
+    }
+  ]
+}

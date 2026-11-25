@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import ProjectsFilter from '../../components/react/ProjectsFilter';
+import { getProjects, projectPicture } from '../../lib/projects';
+import { url } from '../../lib/url';
+
+const projects = (await getProjects()).map((p) => ({
+  id: p.id,
+  href: url(`projects/${p.id}`),
+  title: p.data.title,
+  status: p.data.status,
+  year: p.data.year,
+  role: p.data.role || '',
+  tools: p.data.tools || '',
+  description: p.data.description,
+  picture: projectPicture(p),
+}));
+---
+<Layout title="Projects" current="projects">
+  <PageHead title="Projects" jp="制作" />
+  <div class="g sec">
+    <ProjectsFilter client:load projects={projects} />
+  </div>
+</Layout>

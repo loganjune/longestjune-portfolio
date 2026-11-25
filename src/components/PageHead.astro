@@ -1,0 +1,10 @@
+---
+// The big page title with its small Japanese label underneath. Anything passed inside
+// <PageHead>…</PageHead> sits in the right-hand column next to the label.
+interface Props { title: string; jp: string }
+const { title, jp } = Astro.props;
+---
+<div class="g phead">
+  <h1 class="disp">{title}</h1>
+  <div class="split"><span class="lab soft" lang="ja">{jp}</span><slot><span></span></slot></div>
+</div>

@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Pic from '../components/Pic.astro';
+import PageHead from '../components/PageHead.astro';
+import { site, now, pic } from '../lib/content';
+const A = site.about;
+---
+<Layout title="About" current="about">
+  <PageHead title="About" jp="自己紹介" />
+  <div class="g sec split">
+    <span class="lab">Who</span>
+    <div class="prose">
+      <p class="statement" style="margin-bottom:28px">{A.statement}</p>
+      {A.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+  <!-- Label + rows: each row's own label sits in the left column, under the section label. -->
+  {A.what?.length > 0 && (
+    <div class="g sec facts">
+      <span class="lab">What</span>
+      <ul class="rows">
+        {A.what.map((w) => <li class="split"><span class="lab soft">{w.label}</span><span>{w.text}</span></li>)}
+      </ul>
+    </div>
+  )}
+  <div class="plate fill" style="height:min(70svh,640px)"><Pic picture={pic(A)} /></div>
+  <div class="g sec facts">
+    <span class="lab">Currently</span>
+    <ul class="rows">
+      {now.map((n) => <li class="split"><span class="lab soft">{n.label}</span><span>{n.text}</span></li>)}
+    </ul>
+  </div>
+</Layout>

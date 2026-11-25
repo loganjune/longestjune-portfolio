@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PhotoGallery from '../../components/react/PhotoGallery';
+import PageHead from '../../components/PageHead.astro';
+import Pic from '../../components/Pic.astro';
+import AlbumsIndex from '../../components/react/AlbumsIndex';
+import { gallery, galleryDrawings, galleryFeatured, pic } from '../../lib/content';
+import { getAlbums, albumCover } from '../../lib/albums';
+import { tagsInUse } from '../../lib/stories';
+import { url, formatDate } from '../../lib/url';
+
+const albums = await getAlbums();
+const albumCards = albums.map((a) => ({
+  id: a.id,
+  href: url(`gallery/${a.id}`),
+  title: a.data.title,
+  location: a.data.location || '',
+  date: a.data.date ? formatDate(a.data.date) : '',
+  description: a.data.description || '',
+  cover: albumCover(a.data),
+  count: a.data.photos.length,
+  tags: a.data.tags,
+}));
+// The featured album sits large at the top; then the other albums, the single photos, and the drawings.
+const featured = albumCards.find((a) => a.id === galleryFeatured);
+const others = albumCards.filter((a) => a !== featured);
+---
+<Layout title="Gallery" current="gallery">
+  <PageHead title="Gallery" jp="写真"><span class="soft">Images collected along the way.</span></PageHead>
+  {featured && (
+    <div class="g sec">
+      <a class="album featured-album" href={featured.href}>
+        <div class="ph fill">
+          <Pic picture={featured.cover} alt="" />
+          <span class="lab featured-tag">Featured album</span>
+          <span class="album-name disp" aria-hidden="true">{featured.title}</span>
+        </div>
+        <h3 class="album-title">{featured.title}</h3>
+      </a>
+    </div>
+  )}
+  {others.length > 0 && (
+    <div class="g sec albums">
+      <AlbumsIndex client:load albums={others} tags={tagsInUse(others)} />
+    </div>
+  )}
+  {gallery.length > 0 && (
+    <div class="g sec">
+      <div class="split proj-bar"><button type="button" class="lab sec-toggle" aria-expanded="true" aria-controls="sec-photos">Selected photos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg></button></div>
+      <div id="sec-photos"><PhotoGallery client:visible label="Gallery" photos={gallery.map((g) => ({ picture: pic(g), caption: g.caption }))} /></div>
+    </div>
+  )}
+  {galleryDrawings.length > 0 && (
+    <div class="g sec">
+      <div class="split proj-bar"><button type="button" class="lab sec-toggle" aria-expanded="true" aria-controls="sec-drawings">Drawings <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg></button></div>
+      <div id="sec-drawings"><PhotoGallery client:visible label="Drawings" photos={galleryDrawings.map((d) => ({ picture: pic(d), caption: d.caption }))} /></div>
+    </div>
+  )}
+</Layout>
+
+<script>
+  // Selected photos and Drawings: the chevron on each label folds the section away (open on every visit).
+  document.querySelectorAll<HTMLButtonElement>('button.sec-toggle[aria-controls^="sec-"]').forEach((b) => {
+    const body = document.getElementById(b.getAttribute('aria-controls')!);
+    if (!body || b.closest('astro-island')) return; // Albums handles its own (React)
+    b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', String(open));
+      body.hidden = !open;
+    });
+  });
+</script>

@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Pic from '../components/Pic.astro';
+import Daylight from '../components/react/Daylight';
+import { site as S } from '../lib/content';
+import { getProjects, projectPicture } from '../lib/projects';
+import { photoArt, photoBand } from '../lib/overlays';
+import { url, PAGES, formatDate } from '../lib/url';
+import { getStories } from '../lib/stories';
+
+const featured = (await getProjects()).slice(0, 3).map((p) => ({ ...p.data, id: p.id, pic: projectPicture(p), art: photoArt(p.id, p.data.photo), band: photoBand(p.id, p.data.photo) }));
+const stories = (await getStories()).slice(0, 3);
+const explore = PAGES.filter((p) => p.href && p.href !== 'contact');
+---
+<Layout overPlate current="">
+  <div class="plate hero" id="heroplate">
+    <video id="herovid" src={url('hero.mp4')} poster={url('hero.jpg')} autoplay muted playsinline preload="auto" disablepictureinpicture aria-label="A dog running across the beach at sunset, past a lifeguard tower"></video>
+    <div class="cap">
+      <span class="lab">{S.tagline}</span>
+      <button id="vidbtn" class="vidbtn" type="button" aria-controls="herovid" aria-label="Pause video"></button>
+    </div>
+    <span class="tate" lang="ja">夏至</span>
+    <h1 class="disp fit"><span>Longest June<span class="seal" lang="zh" aria-hidden="true" title="龍, long: dragon">龍</span></span></h1>
+  </div>
+
+  <div class="g sec split">
+    <span class="lab">Hello</span>
+    <p class="statement">{S.hello}</p>
+  </div>
+
+  <div class="g split" style="padding-bottom:clamp(48px,6vw,96px)">
+    <span class="lab">Location</span>
+    <div>
+    <p class="statement" style="font-size:clamp(22px,2vw,28px);display:flex;align-items:center;gap:.4em">
+      <svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 21.5s-7-6.1-7-11.8A7 7 0 0 1 19 9.7c0 5.7-7 11.8-7 11.8z"/><circle cx="12" cy="9.7" r="2.6"/></svg>
+      <span>{S.location}</span>
+    </p>
+    <!-- Marina del Rey's position, for today's sunrise and sunset. -->
+    <Daylight client:only="react" lat={33.98} lon={-118.45} timeZone="America/Los_Angeles" />
+    </div>
+  </div>
+
+  <div class="g split" style="padding-bottom:clamp(56px,8vw,120px)">
+    <span class="lab">Explore</span>
+    <ul class="rows lab">
+      {explore.map((p) => <li><a href={url(p.href)}><span>{p.name}</span><span class="arrow">→</span></a></li>)}
+    </ul>
+  </div>
+
+  {featured.length > 0 && (
+    <div class="plate feat" id="feat">
+      {featured.map((p, i) => (
+        <div class="fslide fill" data-off={i > 0 ? '' : undefined}>
+          {/* Half photo, half drawing: graphics drawn over the photo (src/lib/overlays.ts), else the plain picture. */}
+          {p.art ? <Fragment set:html={p.art} /> : <Pic picture={p.pic} />}
+          {p.band && <div class="feat-band" style={`--band:${p.band}`} />}
+        </div>
+      ))}
+      <h2 class="disp fit"><span id="feattitle">{featured[0].title}</span></h2>
+      <nav class="lab" id="featnav" aria-label="Featured projects">
+        {featured.map((p, i) => <button type="button" data-i={i} data-status={p.status} data-year={p.year} aria-current={i === 0 ? 'true' : 'false'}>{p.title}</button>)}
+      </nav>
+      <div class="meta lab"><span id="featstatus">{featured[0].status}</span><br /><span id="featyear">{featured[0].year}</span></div>
+    </div>
+  )}
+
+  <div class="g sec facts">
+    <span class="lab">Recent stories</span>
+    <ul class="rows">
+      {stories.map((s) => (
+        <li><a href={s.href} class="split"><span class="lab soft">{s.date ? formatDate(s.date) : s.kind}</span><span class="fact-main"><span>{s.title}</span><span class="arrow">→</span></span></a></li>
+      ))}
+    </ul>
+  </div>
+</Layout>
+
+<script>
+  // hero video: plays once, then rests on its last frame; the round button plays/pauses
+  const hv = document.getElementById('herovid') as HTMLVideoElement | null;
+  const vb = document.getElementById('vidbtn');
+  if (hv && vb) {
+    const IC = {
+      play: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg>',
+      pause: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2.5" y="1.5" width="3" height="11" fill="currentColor"/><rect x="8.5" y="1.5" width="3" height="11" fill="currentColor"/></svg>',
+    };
+    let want = true;
+    try { want = localStorage.getItem('lj-vid') !== 'paused'; } catch {}
+    hv.muted = true; hv.defaultMuted = true;
+    const label = () => { vb.innerHTML = hv.paused ? IC.play : IC.pause; vb.setAttribute('aria-label', hv.paused ? 'Play video' : 'Pause video'); };
+    const tryPlay = () => { hv.play()?.catch(() => label()); };
+    let started = false;
+    hv.addEventListener('play', () => { started = true; label(); });
+    hv.addEventListener('pause', label);
+    hv.addEventListener('ended', label);
+    hv.addEventListener('canplay', () => { if (want && !started && hv.paused) tryPlay(); }, { once: true });
+    if (want) tryPlay(); else hv.pause();
+    label();
+    vb.addEventListener('click', () => {
+      if (hv.paused) { want = true; tryPlay(); } else { want = false; hv.pause(); }
+      try { localStorage.setItem('lj-vid', want ? 'playing' : 'paused'); } catch {}
+    });
+    addEventListener('pointerdown', function f() { if (want && !started && hv.paused) tryPlay(); removeEventListener('pointerdown', f); });
+  }
+
+  // featured projects: switch the big picture and title (each nav button carries its project's details)
+  const feat = document.getElementById('feat');
+  if (feat) {
+    const slides = feat.querySelectorAll<HTMLElement>('.fslide');
+    const buttons = feat.querySelectorAll<HTMLButtonElement>('#featnav button');
+    const title = document.getElementById('feattitle')!;
+    const status = document.getElementById('featstatus')!;
+    const year = document.getElementById('featyear')!;
+    document.getElementById('featnav')!.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest('button');
+      if (!b) return;
+      const i = Number(b.dataset.i);
+      slides.forEach((s, j) => s.toggleAttribute('data-off', j !== i));
+      buttons.forEach((x, j) => x.setAttribute('aria-current', String(j === i)));
+      title.textContent = b.textContent;
+      status.textContent = b.dataset.status!;
+      year.textContent = b.dataset.year!;
+      (window as any).queueFit?.();
+    });
+    // A slide's title band (e.g. Pool Tile's pink) is as tall as the title, which is sized to fit the width.
+    const h2 = feat.querySelector('h2')!;
+    new ResizeObserver(() => feat.style.setProperty('--title-h', `${h2.offsetTop + h2.offsetHeight}px`)).observe(h2);
+  }
+</script>

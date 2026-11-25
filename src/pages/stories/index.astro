@@ -1,0 +1,16 @@
+---
+// Stories: notes and travel albums together, newest first.
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import StoriesIndex from '../../components/react/StoriesIndex';
+import { getStories, tagsInUse } from '../../lib/stories';
+import { formatDate } from '../../lib/url';
+
+const stories = (await getStories()).map((s) => ({ ...s, date: s.date ? formatDate(s.date) : '' }));
+---
+<Layout title="Stories" current="stories">
+  <PageHead title="Stories" jp="記録"><span class="soft">Notes on making things, and travel.</span></PageHead>
+  <div class="g sec">
+    <StoriesIndex client:load stories={stories} tags={tagsInUse(stories)} />
+  </div>
+</Layout>

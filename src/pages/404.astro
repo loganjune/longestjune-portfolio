@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { url } from '../lib/url';
+---
+<Layout title="Not found">
+  <div class="g phead"><h1 class="disp">Lost at sea</h1></div>
+  <div class="g sec split">
+    <span class="lab">404</span>
+    <p class="statement">This page drifted off. <a href={url('')}>Head back home</a>.</p>
+  </div>
+</Layout>

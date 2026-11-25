@@ -1,0 +1,46 @@
+{
+  "shop": [
+    {
+      "name": "Solstice print",
+      "price": "$28",
+      "details": "A4 giclée print",
+      "picture": "sea",
+      "photo": ""
+    },
+    {
+      "name": "Pool tile stickers",
+      "price": "$8",
+      "details": "Set of six",
+      "picture": "pool",
+      "photo": ""
+    },
+    {
+      "name": "Window Light zine",
+      "price": "$14",
+      "details": "24 pages, risograph",
+      "picture": "room",
+      "photo": ""
+    },
+    {
+      "name": "Plaster notebook",
+      "price": "$18",
+      "details": "Dot grid, 96 pages",
+      "picture": "wall",
+      "photo": ""
+    },
+    {
+      "name": "Dunes postcards",
+      "price": "$10",
+      "details": "Set of five",
+      "picture": "dune",
+      "photo": ""
+    },
+    {
+      "name": "Blue hour tote",
+      "price": "$24",
+      "details": "Natural cotton",
+      "picture": "dusk",
+      "photo": ""
+    }
+  ]
+}

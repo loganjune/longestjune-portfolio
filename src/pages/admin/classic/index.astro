@@ -1,0 +1,19 @@
+---
+// The web editor (Sveltia CMS). Sign in, edit, and every save is committed to GitHub;
+// Hostinger then rebuilds the live site. Its settings come from ./config.yml.ts.
+import { url } from '../../../lib/url';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Classic editor · longest june</title>
+  <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+  <link rel="cms-config-url" type="application/yaml" href={url('admin/config.yml')} />
+</head>
+<body>
+  <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+</body>
+</html>

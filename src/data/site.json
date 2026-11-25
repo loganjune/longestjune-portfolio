@@ -1,0 +1,45 @@
+{
+  "tagline": "A little hub for my projects and the things I'm building",
+  "hello": "This site is a collection of projects that I've always wanted to work on. Named after the longest day of the year, when the sun sets late and there's always time for one more thing.",
+  "location": "Marina del Rey, CA",
+  "email": "longestjune@gmail.com",
+  "github": "https://github.com/loganjune/",
+  "about": {
+    "statement": "longest june is where I keep what I’m building: small tools, sites and experiments, plus notes from the places I travel. It’s all more connected than it looks.",
+    "paragraphs": [
+      "I like software that gives people time back. The best tools are quiet: they do one thing well, get out of the way, and leave you with more of your day. That’s what I try to make.",
+      "The name comes from the summer solstice, the longest day of the year. It’s the feeling I want everything here to have: unhurried, warm, with a little more light than you expected. Enough, maybe, to catch the midnight sun.",
+      "Travel is part of the work. New places and other people’s everyday problems are where most of my ideas start, and they shape what I build next.",
+      "Most of what’s here is still in progress, on purpose. I’d rather build in the open and show how things get made: the early versions, the decisions, and what I’d change next time.",
+      "If you’re working on something similar, or want to, I’d love to hear about it."
+    ],
+    "picture": "room",
+    "photo": "",
+    "what": [
+      {
+        "label": "Built with",
+        "text": "Astro and TypeScript, with React for the interactive parts (the photo viewer, story and project filters, daylight times, and the editor’s photo screens), and plain CSS."
+      },
+      {
+        "label": "Hosted on",
+        "text": "Hostinger, deployed automatically from GitHub."
+      },
+      {
+        "label": "Backend",
+        "text": "Cloudflare Workers and a D1 database for the contact form and backups, with Turnstile keeping spam out."
+      },
+      {
+        "label": "Email",
+        "text": "Resend, for contact-form alerts."
+      },
+      {
+        "label": "Editing",
+        "text": "A custom editor I built for this site. It saves to GitHub, with TipTap for writing."
+      },
+      {
+        "label": "Type",
+        "text": "Marcellus, STIX Two Text, Jost and Shippori Mincho."
+      }
+    ]
+  }
+}

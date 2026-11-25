@@ -1,0 +1,110 @@
+---
+import '../styles/global.css';
+import { site as S } from '../lib/content';
+import { url, PAGES } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** The page starts with a full-bleed picture, so the top bar begins white over it. */
+  overPlate?: boolean;
+  /** Keep this page out of search engines (admin pages). */
+  noindex?: boolean;
+  /** Which menu item to mark as the current page ('' is Home). */
+  current?: string;
+}
+const { title, description = S.tagline, overPlate = false, current, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · longest june` : 'longest june';
+const githubLabel = S.github.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(url('hero.jpg'), Astro.site).href} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=STIX+Two+Text:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class:list={['g', { 'on-plate': overPlate }]} id="hdr">
+    <button class="menu-btn lab" id="open" aria-expanded="false" aria-controls="menu">Menu</button>
+    <span style="display:flex;gap:22px"><a class="right lab" href={S.github}>GitHub</a><a class="right lab" href={url('contact')}>Contact</a></span>
+  </header>
+
+  <div id="menu" class="g" hidden role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="top"><button class="lab" id="close" style="min-height:44px;padding:0;justify-self:start">Close</button><span></span><span></span></div>
+    <ol>
+      {PAGES.map((p) => (
+        <li><a href={url(p.href)} aria-current={current === p.href ? 'page' : undefined}><span class="disp">{p.name}</span><span class="jp" lang="ja">{p.jp}</span><span class="arrow">→</span></a></li>
+      ))}
+    </ol>
+    <p class="lab soft links" style="margin:0"><span>{S.email}</span><a href={S.github}>GitHub</a></p>
+  </div>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="g">
+    <div class="cols">
+      <div><span class="lab">Pages</span><ul class="lab" style="margin-top:14px">{PAGES.map((p) => <li><a href={url(p.href)}>{p.name}</a></li>)}</ul></div>
+      <div><span class="lab">Contact</span><ul style="margin-top:14px"><li><a href={`mailto:${S.email}`}>{S.email}</a></li><li><a href={S.github}>{githubLabel}</a></li></ul></div>
+      <div><span class="lab">Season</span><p style="margin:14px 0 0" class="soft"><span lang="ja" style="font-family:'Shippori Mincho',serif">水無月</span>, the month of water.</p></div>
+    </div>
+    <div class="disp big fit"><span>Longest June</span></div>
+    <div class="split lab soft" style="margin-top:18px"><span>© {new Date().getFullYear()} longest june</span><span>Projects, notes, resume and shop items are sample content for now.</span></div>
+  </footer>
+
+  <script>
+    const $ = (id: string) => document.getElementById(id)!;
+
+    // menu
+    const menu = $('menu'), openB = $('open');
+    const setMenu = (on: boolean) => {
+      menu.hidden = !on; openB.setAttribute('aria-expanded', String(on));
+      document.body.style.overflow = on ? 'hidden' : '';
+      if (on) $('close').focus();
+    };
+    openB.addEventListener('click', () => setMenu(true));
+    $('close').addEventListener('click', () => setMenu(false));
+    menu.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) setMenu(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); openB.focus(); } });
+
+    // top bar: clear over the opening picture, solid sand once you scroll past it
+    // (the hero's height is measured on load/resize only, so scrolling never forces a layout)
+    const hdr = $('hdr'), plate = document.getElementById('heroplate');
+    let lim = 8;
+    const hdrState = () => hdr.classList.toggle('solid', scrollY > lim);
+    const measure = () => { lim = plate ? plate.offsetHeight - 64 : 8; hdrState(); };
+    addEventListener('scroll', hdrState, { passive: true });
+    addEventListener('resize', measure);
+    measure();
+
+    // big capitals sized to fill the width exactly (reads and writes batched, not interleaved per element)
+    const fitAll = () => {
+      const els = [...document.querySelectorAll<HTMLElement>('.fit')].filter((el) => el.clientWidth && el.firstElementChild);
+      els.forEach((el) => (el.style.fontSize = '100px'));
+      const sizes = els.map((el) => {
+        const w = el.firstElementChild!.getBoundingClientRect().width;
+        return w ? Math.floor(Math.min(260, (100 * el.clientWidth * 0.95) / w)) + 'px' : '';
+      });
+      els.forEach((el, i) => sizes[i] && (el.style.fontSize = sizes[i]));
+    };
+    let raf = 0, lastW = 0;
+    const queueFit = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); };
+    (window as any).queueFit = queueFit;
+    addEventListener('resize', () => { if (innerWidth !== lastW) { lastW = innerWidth; queueFit(); } });
+    addEventListener('load', queueFit);
+    document.fonts?.ready.then(queueFit);
+    queueFit();
+  </script>
+</body>
+</html>
