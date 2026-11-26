@@ -9,10 +9,11 @@ This repo is a read-only copy for showing how the site is built. The live site d
 I designed and directed the site, and built it with [Claude Code](https://claude.com/claude-code) as my pair programmer. I decided what to build, how it should look and work, and checked every page on desktop and phone. Claude wrote most of the code to that brief, and we iterated in small steps until each piece was right.
 
 The parts I shaped most:
+- **The stack.** I chose the tools: Astro for a fast static site, React for the interactive pieces, Git as the place content lives, a Cloudflare database for messages and backups, and Hostinger for hosting.
 - **The design.** A minimal, Japanese-studio feel: a pale sand ground, warm brown ink, giant serif capitals and small Japanese labels. Graphics are drawn over my own photos, and 龍 (*lóng*, dragon) on the hero is a pun on the "long" in "longest june".
 - **The editor's workflow.** I wanted to post from my phone without ever seeing Git. So edits save themselves as drafts, and one Publish button puts them live. Photos are prepared on the device before they upload.
 - **The photo tools.** I edit my own pictures, so the editor has cropping, straightening, filters and frames, plus HEIC support for iPhone photos.
-- **Hosting and data.** Content stays in Git so every change can be undone. A small database holds contact messages and backups, and editors sign in with GitHub, with no passwords stored.
+- **Hosting and data.** Every change is a Git commit, so anything can be undone, and editors sign in with GitHub, with no passwords stored.
 
 ## What's in it
 
