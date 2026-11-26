@@ -6,15 +6,14 @@ This repo is a read-only copy for showing how the site is built. The live site d
 
 ## How I built this
 
-I designed this site and built it with [Claude Code](https://claude.com/claude-code) as my pair programmer. I'd tell it what I wanted, how it should look and work, and which tools to use. Claude wrote most of the code, then I'd check every page on my laptop and phone and keep tweaking until it felt right.
+I designed and directed the site, and built it with [Claude Code](https://claude.com/claude-code) as my pair programmer. I decided what to build, how it should look and work, and checked every page on desktop and phone. Claude wrote most of the code to that brief, and we iterated in small steps until each piece was right.
 
-Stuff I picked:
-- The stack: Astro, React for the interactive bits, TypeScript, plain CSS. Content lives in Git, a Cloudflare Worker + database handles the contact form and backups, and it's hosted on Hostinger.
-- The look: minimal, kind of like a Japanese design studio. Pale pink-sand background, warm brown text, big serif capitals, little Japanese labels on each page. No black backgrounds.
-- Fonts: Marcellus for the big titles, STIX Two Text for reading (I tried EB Garamond first but wanted something a little more scientific and put together), Jost for labels and dates, Shippori Mincho for the Japanese.
-- The dragon: 龍 (*lóng*) on the homepage is a pun on the "long" in longest june.
-- The photos: they're mine. Some have little drawings on top, like the sunset on the Solstice one.
-- The editor: I wanted to post from my phone without dealing with Git, so it saves drafts on its own and there's one Publish button. You can crop, straighten, add filters and frames, and add iPhone photos straight from the camera roll.
+The parts I shaped most:
+- **The stack.** I chose the tools: Astro for a fast static site, React for the interactive pieces, TypeScript, plain CSS, Git as the place content lives, a Cloudflare Worker and database for the contact form, messages and backups, and Hostinger for hosting.
+- **The design.** A minimal, Japanese-studio feel: a pale sand ground, warm brown ink, giant serif capitals and small Japanese labels. I picked the type: Marcellus for the display capitals, STIX Two Text for reading (chosen over EB Garamond for a more precise, scientific feel), Jost for labels and dates, and Shippori Mincho for the Japanese. Graphics are drawn over my own photos, and 龍 (*lóng*, dragon) on the hero is a pun on the "long" in "longest june".
+- **The editor's workflow.** I wanted to post from my phone without ever seeing Git. So edits save themselves as drafts, and one Publish button puts them live. Photos are prepared on the device before they upload.
+- **The photo tools.** I edit my own pictures, so the editor has cropping, straightening, filters and frames, plus HEIC support for iPhone photos.
+- **Hosting and data.** Every change is a Git commit, so anything can be undone, and editors sign in with GitHub, with no passwords stored.
 
 ## What's in it
 
