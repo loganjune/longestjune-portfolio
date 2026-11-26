@@ -4,6 +4,16 @@ The source of **[longestjune.com](https://longestjune.com)**, my personal site: 
 
 This repo is a read-only copy for showing how the site is built. The live site deploys from a private repo that holds the same code.
 
+## How I built this
+
+I designed and directed the site, and built it with [Claude Code](https://claude.com/claude-code) as my pair programmer. I decided what to build, how it should look and work, and checked every page on desktop and phone. Claude wrote most of the code to that brief, and we iterated in small steps until each piece was right.
+
+The parts I shaped most:
+- **The design.** A minimal, Japanese-studio feel: a pale sand ground, warm brown ink, giant serif capitals and small Japanese labels. Graphics are drawn over my own photos, and 龍 (*lóng*, dragon) on the hero is a pun on the "long" in "longest june".
+- **The editor's workflow.** I wanted to post from my phone without ever seeing Git. So edits save themselves as drafts, and one Publish button puts them live. Photos are prepared on the device before they upload.
+- **The photo tools.** I edit my own pictures, so the editor has cropping, straightening, filters and frames, plus HEIC support for iPhone photos.
+- **Hosting and data.** Content stays in Git so every change can be undone. A small database holds contact messages and backups, and editors sign in with GitHub, with no passwords stored.
+
 ## What's in it
 
 **The site** (`src/pages`, `src/components`, `src/lib`, `src/styles`)
